@@ -50,12 +50,10 @@
         //<![CDATA[
           jQuery(function() {
             var checkbox = jQuery('#wrapping:checkbox');
-            if (checkbox.length) {
-               if (checkbox.not(':checked').length) {
-                 checkbox.attr('checked','checked');
-                 jQuery('#cartform').get(0).submit();
-               }
-             }
+            if (checkbox.length && checkbox.not(':checked').length) {
+              checkbox.attr('checked','checked');
+              jQuery('#cartform').get(0).submit();
+            }
           });
         //]]>
         </script>
@@ -101,23 +99,23 @@
 <script type="text/javascript" charset="utf-8">
 //<![CDATA[
   jQuery(function() {
-   var giftWrapRow = jQuery('form tr:contains({{ title }})');
-   var giftWrapLine = jQuery('form li:contains({{ title }})');
+   var giftWrapRow = jQuery('#cartform tr:contains({{ title }})');
+   var giftWrapLine = jQuery('#cartform li:contains({{ title }})');
    if (giftWrapRow.length) {
      giftWrapRow.find('input[name*=updates]').remove();
      giftWrapRow.find('a:last').not(':contains({{ title }})').remove();
-     var lastRow = jQuery('form tr:has(:text):last');
+     var lastRow = jQuery('#cartform tr:has(:text):last');
      giftWrapRow.insertAfter(lastRow);
-     jQuery('form tr:odd').addClass('even').removeClass('odd');
-     jQuery('form tr:even').addClass('odd').removeClass('even');
+     jQuery('#cartform tr:odd').addClass('even').removeClass('odd');
+     jQuery('#cartform tr:even').addClass('odd').removeClass('even');
    }
    if (giftWrapLine.length) {
      giftWrapLine.find('input[name*=updates]').remove();
      giftWrapLine.find('a:last').not(':contains({{ title }})').remove();
-     var lastLine = jQuery('form li:has(:text):last');
+     var lastLine = jQuery('#cartform li:has(:text):last');
      giftWrapLine.insertAfter(lastLine);
-     jQuery('form li:odd').addClass('odd').removeClass('even');
-     jQuery('form li:even').addClass('even').removeClass('odd');
+     jQuery('#cartform li:odd').addClass('odd').removeClass('even');
+     jQuery('#cartform li:even').addClass('even').removeClass('odd');
    }
   }); 
 //]]>
