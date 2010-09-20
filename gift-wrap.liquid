@@ -1,0 +1,124 @@
+<!-- DO NOT REMOVE THE FOLLOWING COMMENT -->
+<!-- (c) Copyright 2010 Caroline Hill. All Rights Reserved. Contact Mlle Caroline Schnapp at mllegeorgesand@gmail.com -->
+<!-- DO NOT REMOVE THE ABOVE COMMENT -->
+{% assign id = linklists.gift-wrap.links.first.object.variants.first.id %}
+{% assign title = linklists.gift-wrap.links.first.object.title %}
+{% if cart.item_count > 0 %}
+  {% if cart.item_count == 1 and cart.items.first.id == id %}
+  <!-- remove the gift-wrap -->
+  <script type="text/javascript" charset="utf-8">
+  //<![CDATA[
+    function updateCart() {
+      jQuery('#wrapping').removeAttr('checked');
+      jQuery('#cartform').get(0).submit();
+    }
+    var params = {
+      type: 'POST',
+      url: '/cart/change.js',
+      data: 'quantity=0&id=' + {{ id }},
+      dataType: 'json',
+      success: updateCart
+    };
+    jQuery.ajax(params);
+  //]]>
+  </script>
+  {% else %}
+    {% assign gift_wrap_in_cart = false %}
+    {% for item in cart.items %}
+      {% if gift_wrap_in_cart == false and item.id == id %}
+        {% assign gift_wrap_in_cart = true %}
+        <!-- sanity check to see if we don't have many gift-wrap items in the cart -->
+        {% if item.quantity > 1 %}
+        <script type="text/javascript" charset="utf-8">
+        //<![CDATA[
+          var params = {
+            type: 'POST',
+            url: '/cart/change.js',
+            data: 'quantity=1&id=' + {{ id }},
+            dataType: 'json',
+            success: function(line_item) { 
+              window.location.href = '/cart';
+            }
+          };
+          jQuery.ajax(params);
+        //]]>
+        </script>
+        {% endif %}
+        <!-- end of paranoiac moment -->
+        <!-- sanity check to see if the checkbox has been checked -->
+        <script type="text/javascript" charset="utf-8">
+        //<![CDATA[
+          jQuery(function() {
+            var checkbox = jQuery('#wrapping:checkbox');
+            if (checkbox.length) {
+               if (checkbox.not(':checked').length) {
+                 checkbox.attr('checked','checked');
+                 jQuery('#cartform').get(0).submit();
+               }
+             }
+          });
+        //]]>
+        </script>
+        <!-- end of paranoiac moment -->
+      {% endif %}
+    {% endfor %}
+    <!-- now we know whether we have or not a gift-wrap item in the cart -->    
+    <script type="text/javascript" charset="utf-8">
+    //<![CDATA[
+    function updateCart() {
+      jQuery('#cartform').get(0).submit();
+    }
+    jQuery(function() {
+      jQuery('#wrapping').change(function() {
+        if (jQuery(this).is(':checked') && !{{ gift_wrap_in_cart }}) {
+          // If we want a gift-wrap and there's no gift-wrap already in the cart.
+          var params = {
+            type: 'POST',
+            url: '/cart/add.js',
+            data: 'quantity=1&id=' + '{{ id }}',
+            dataType: 'json',
+            success: updateCart
+          };
+          jQuery.ajax(params);
+        }
+        else {
+          // If we want to remove the gift-wrap.
+          var params = {
+            type: 'POST',
+            url: '/cart/change.js',
+            data: 'quantity=0&id=' + '{{ id }}',
+            dataType: 'json',
+            success: updateCart
+          };
+          jQuery.ajax(params);
+        }
+      });
+    });
+    //]]>
+    </script>
+  {% endif %}
+{% endif %}
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+  jQuery(function() {
+   var giftWrapRow = jQuery('form tr:contains({{ title }})');
+   var giftWrapLine = jQuery('form li:contains({{ title }})');
+   if (giftWrapRow.length) {
+     giftWrapRow.find('input[name*=updates]').remove();
+     giftWrapRow.find('a:last').not(':contains({{ title }})').remove();
+     var lastRow = jQuery('form tr:has(:text):last');
+     giftWrapRow.insertAfter(lastRow);
+     jQuery('form tr:odd').addClass('even').removeClass('odd');
+     jQuery('form tr:even').addClass('odd').removeClass('even');
+   }
+   if (giftWrapLine.length) {
+     giftWrapLine.find('input[name*=updates]').remove();
+     giftWrapLine.find('a:last').not(':contains({{ title }})').remove();
+     var lastLine = jQuery('form li:has(:text):last');
+     giftWrapLine.insertAfter(lastLine);
+     jQuery('form li:odd').addClass('odd').removeClass('even');
+     jQuery('form li:even').addClass('even').removeClass('odd');
+   }
+  }); 
+//]]>
+</script>
