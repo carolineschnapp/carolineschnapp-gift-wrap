@@ -1,6 +1,7 @@
 <!-- DO NOT REMOVE THE FOLLOWING COMMENT -->
-<!-- (c) Copyright 2010 Caroline Hill. All Rights Reserved. Contact Mlle Caroline Schnapp at mllegeorgesand@gmail.com -->
+<!-- (c) Copyright 2011 Caroline Hill. All Rights Reserved. Contact Mlle Caroline Schnapp at mllegeorgesand@gmail.com -->
 <!-- DO NOT REMOVE THE ABOVE COMMENT -->
+<script>!window.jQuery && document.write('<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"><\/script>')</script>
 {% assign id = linklists.gift-wrap.links.first.object.variants.first.id %}
 {% assign title = linklists.gift-wrap.links.first.object.title %}
 {% if cart.item_count > 0 %}
@@ -10,7 +11,7 @@
   //<![CDATA[
     function updateCart() {
       jQuery('#wrapping').removeAttr('checked');
-      jQuery('#cartform').get(0).submit();
+      jQuery('form[action="/cart"]').get(0).submit();
     }
     var params = {
       type: 'POST',
@@ -52,7 +53,7 @@
             var checkbox = jQuery('#wrapping:checkbox');
             if (checkbox.length && checkbox.not(':checked').length) {
               checkbox.attr('checked','checked');
-              jQuery('#cartform').get(0).submit();
+              jQuery('form[action="/cart"]').get(0).submit();
             }
           });
         //]]>
@@ -64,7 +65,7 @@
     <script type="text/javascript" charset="utf-8">
     //<![CDATA[
     function updateCart() {
-      jQuery('#cartform').get(0).submit();
+      jQuery('form[action="/cart"]').get(0).submit();
     }
     jQuery(function() {
       jQuery('#wrapping').change(function() {
@@ -99,23 +100,23 @@
 <script type="text/javascript" charset="utf-8">
 //<![CDATA[
   jQuery(function() {
-   var giftWrapRow = jQuery('#cartform tr:contains({{ title }})');
-   var giftWrapLine = jQuery('#cartform li:contains({{ title }})');
+   var giftWrapRow = jQuery('form[action="/cart"]').find('tr:contains({{ title }})');
+   var giftWrapLine = jQuery('form[action="/cart"]').find('li:contains({{ title }})');
    if (giftWrapRow.length) {
      giftWrapRow.find('input[name*=updates]').remove();
      giftWrapRow.find('a:last').not(':contains({{ title }})').remove();
-     var lastRow = jQuery('#cartform tr:has(:text):last');
+     var lastRow = jQuery('form[action="/cart"] tr:has(:text):last');
      giftWrapRow.insertAfter(lastRow);
-     jQuery('#cartform tr:odd').addClass('even').removeClass('odd');
-     jQuery('#cartform tr:even').addClass('odd').removeClass('even');
+     jQuery('form[action="/cart"] tr:odd').addClass('even').removeClass('odd');
+     jQuery('form[action="/cart"] tr:even').addClass('odd').removeClass('even');
    }
    if (giftWrapLine.length) {
      giftWrapLine.find('input[name*=updates]').remove();
      giftWrapLine.find('a:last').not(':contains({{ title }})').remove();
-     var lastLine = jQuery('#cartform li:has(:text):last');
+     var lastLine = jQuery('form[action="/cart"] li:has(:text):last');
      giftWrapLine.insertAfter(lastLine);
-     jQuery('#cartform li:odd').addClass('odd').removeClass('even');
-     jQuery('#cartform li:even').addClass('even').removeClass('odd');
+     jQuery('form[action="/cart"] li:odd').addClass('odd').removeClass('even');
+     jQuery('form[action="/cart"] li:even').addClass('even').removeClass('odd');
    }
   }); 
 //]]>
