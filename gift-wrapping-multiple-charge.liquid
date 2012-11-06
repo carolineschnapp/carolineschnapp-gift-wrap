@@ -9,8 +9,8 @@
       <input type="hidden" name="attributes[gift-wrapping]" value="" />
       <input id="gift-wrapping" type="checkbox" name="attributes[gift-wrapping]" value="yes" {% if cart.attributes.gift-wrapping %} checked="checked"{% endif %} style="float: none" />
       <label for="gift-wrapping" style="display:inline; padding-left: 5px; float: none;">
-      For {{ linklists.gift-wrapping.links.first.object.price | money }} 
-      please wrap the products in this order.
+      For {{ linklists.gift-wrapping.links.first.object.price | money }} per item,
+      please wrap all items in this order.
       </label>
     </p>
     <p>
