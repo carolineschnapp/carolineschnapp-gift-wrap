@@ -34,11 +34,6 @@
 
 <script>
 
-// Hiding the gift-wrap quantity box and remove button.
-jQuery(function() {      
-  jQuery('#updates_{{ id }}').hide().parents('li,tr').find('a:last').hide();  
-})
-
 Shopify.Cart = Shopify.Cart || {};
 
 Shopify.Cart.GiftWrap = {};
@@ -47,7 +42,7 @@ Shopify.Cart.GiftWrap.set = function() {
   jQuery.ajax({
     type: 'POST',
     url: '/cart/update.js', 
-    data: { updates: { {{ id }}: 1 }, attributes: { 'gift-wrapping': true }}, 
+    data: { updates: { {{ id }}: 1 }, attributes: { 'gift-wrapping': true } }, 
     dataType: 'json',
     success: function() { location.href = '/cart'; }
   });
@@ -57,7 +52,7 @@ Shopify.Cart.GiftWrap.remove = function() {
   jQuery.ajax({
     type: 'POST',
     url: '/cart/update.js', 
-    data: { updates: { {{ id }}: 0 }, attributes: { 'gift-wrapping': '' }}, 
+    data: { updates: { {{ id }}: 0 }, attributes: { 'gift-wrapping': '' } }, 
     dataType: 'json',
     success: function() { location.href = '/cart'; }
   });
@@ -104,7 +99,8 @@ jQuery(function() {
 <p style="clear: left; margin: 30px 0" class="rte">
   You attempted to add a gift-wrapping script to your shopping cart, but it won't work because you don't have 
   a link list with handle <code>gift-wrapping</code> which, in turn, contains a link
-  to your gift-wrapping product. Please review the steps outlined <a href="http://docs.shopify.com/manual/configuration/store-customization/page-specific/cart-page/add-a-gift-wrap-option">here</a>.
+  to your gift-wrapping product. Please review the steps outlined 
+  <a href="http://docs.shopify.com/manual/configuration/store-customization/page-specific/cart-page/add-a-gift-wrap-option">here</a>.
 </p>
 
 {% endif %}
