@@ -42,8 +42,8 @@ Shopify.Cart.GiftWrap = {};
 Shopify.Cart.GiftWrap.set = function() {
   jQuery.ajax({
     type: 'POST',
-    url: '/cart/update.js',
-    data: { updates: { {{ id }}: {{ items_in_cart }} }, attributes: { 'gift-wrapping': true } },
+    url: '/cart/update.js', 
+    data: { updates: { {{ id }}: {{ items_in_cart }} }, attributes: { 'gift-wrapping': true } }, 
     dataType: 'json',
     success: function() { location.href = '/cart'; }
   });
@@ -52,8 +52,8 @@ Shopify.Cart.GiftWrap.set = function() {
 Shopify.Cart.GiftWrap.remove = function() {
   jQuery.ajax({
     type: 'POST',
-    url: '/cart/update.js',
-    data: { updates: { {{ id }}: 0 }, attributes: { 'gift-wrapping': '' } },
+    url: '/cart/update.js', 
+    data: { updates: { {{ id }}: 0 }, attributes: { 'gift-wrapping': '' } }, 
     dataType: 'json',
     success: function() { location.href = '/cart'; }
   });
@@ -85,22 +85,22 @@ jQuery(function() {
 jQuery(function() {
   jQuery('[name="attributes\[gift-wrapping\]"]').change(function() {
     if (jQuery(this).is(':checked')) {
-      Shopify.Cart.GiftWrap.set();
+      Shopify.Cart.GiftWrap.set();    
     }
     else {
       Shopify.Cart.GiftWrap.remove();
     }
   });
 });
-
+ 
 </script>
 
 {% else %}
 
 <p style="clear: left; margin: 30px 0" class="rte">
-  You attempted to add a gift-wrapping script to your shopping cart, but it won't work because you don't have
+  You attempted to add a gift-wrapping script to your shopping cart, but it won't work because you don't have 
   a link list with handle <code>gift-wrapping</code> which, in turn, contains a link
-  to your gift-wrapping product. Please review the steps outlined
+  to your gift-wrapping product. Please review the steps outlined 
   <a href="https://help.shopify.com/en/themes/customization/cart/add-gift-wrap-option"  target="_blank" rel="noopener noreferrer nofollow">here</a>.
 </p>
 
