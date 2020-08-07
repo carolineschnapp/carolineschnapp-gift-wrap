@@ -76,7 +76,7 @@ jQuery(function() {
 // If we have no gift-wrap item in the cart but our gift-wrapping cart attribute has been set.
 {% elsif gift_wraps_in_cart == 0 and cart.attributes.gift-wrapping != blank  %}
 jQuery(function() {
-  Shopify.Cart.GiftWrap.set();
+  Shopify.Cart.GiftWrap.remove();
 });
 {% endif %}
 
